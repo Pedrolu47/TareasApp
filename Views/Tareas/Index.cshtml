@@ -1,0 +1,38 @@
+@model List<TareasApp.Models.Tarea>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lista de Tareas</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h1 { color: #333; }
+        ul { list-style: none; padding: 0; }
+        li { margin-bottom: 10px; }
+        .completada { text-decoration: line-through; color: gray; }
+    </style>
+</head>
+<body>
+    <h1>Lista de Tareas</h1>
+
+    <!-- Formulario para añadir una nueva tarea -->
+    <form method="post" asp-action="Crear">
+        <input type="text" name="descripcion" placeholder="Nueva tarea" required />
+        <button type="submit">Añadir</button>
+    </form>
+
+    <!-- Lista de tareas -->
+    <ul>
+        @foreach (var tarea in Model)
+        {
+            <li class="@((tarea.Completada ? "completada" : ""))">
+                @tarea.Descripcion
+                @if (!tarea.Completada)
+                {
+                    <a asp-action="Completar" asp-route-id="@tarea.Id">[Completar]</a>
+                }
+            </li>
+        }
+    </ul>
+</body>
+</html>
